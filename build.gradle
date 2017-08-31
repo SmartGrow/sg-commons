@@ -1,5 +1,5 @@
 allprojects {
-  group = 'sg.commons'
+  group = 'sg-commons'
 }
 
 subprojects {

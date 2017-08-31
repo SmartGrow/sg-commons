@@ -1,1 +1,3 @@
-include 'sg-springboot-core', 'sg-springboot-web-filter'
+include 'sg-springboot-core',
+        'sg-springboot-web-filter',
+        'sg-springboot-web-security'
