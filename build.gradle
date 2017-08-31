@@ -4,6 +4,7 @@ allprojects {
 
 subprojects {
   apply plugin: 'java'
+  apply plugin: 'maven-publish'
 
   sourceCompatibility = 1.8
 
@@ -20,8 +21,36 @@ subprojects {
     testCompile("org.mockito:mockito-all:1.9.5")
   }
 
+  task sourceJar(type: Jar) {
+    from sourceSets.main.allJava
+  }
+
+  task packageTests(type: Jar) {
+    from sourceSets.test.output
+  }
+
+  publishing {
+    publications {
+      mavenJava(MavenPublication) {
+        groupId project.group
+        artifactId project.name
+        version project.version
+        from components.java
+
+        artifact sourceJar {
+          classifier "sources"
+        }
+
+        artifact packageTests {
+          classifier "tests"
+        }
+      }
+    }
+  }
+
   buildscript {
     ext {
+      springDependencyManagementVersion = '0.5.2.RELEASE'
       springBootVersion = '1.5.6.RELEASE'
 
     }
@@ -29,6 +58,7 @@ subprojects {
       mavenCentral()
     }
     dependencies {
+      classpath("io.spring.gradle:dependency-management-plugin:${springDependencyManagementVersion}")
       classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
     }
    }
