@@ -1,2 +1,6 @@
 version = '0.0.1'
 
+dependencies {
+    compile("org.projectlombok:lombok:1.16.18")
+    compile("com.google.guava:guava:19.0")
+}
