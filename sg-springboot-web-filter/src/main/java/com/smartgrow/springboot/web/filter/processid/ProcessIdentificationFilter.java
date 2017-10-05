@@ -24,10 +24,12 @@ public class ProcessIdentificationFilter extends GenericFilterBean {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         try {
             String processId = extractProcessIdFromRequestHeader(request);
+            
             ProcessIdentificationContext.set(isNotBlank(processId) ? processId : UUID.randomUUID().toString());
             MDC.put(PROCESS_ID_FILTER_KEY, ProcessIdentificationContext.get());
-        } finally {
+            
             chain.doFilter(request, response);
+        } finally {
             ProcessIdentificationContext.remove();
             MDC.clear();
         }
